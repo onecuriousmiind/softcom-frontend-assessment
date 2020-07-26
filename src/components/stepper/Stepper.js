@@ -150,7 +150,7 @@ function Step({ children, className }) {
   );
 }
 
-// Attach Step to Stepper for more accessibility
+// Attach Step to Stepper for better accessibility
 Stepper.Step = Step;
 
 export default Stepper;
