@@ -32,6 +32,16 @@
     "@emotion/core" "^10.0.9"
     tslib "^1.9.3"
 
+"@atlaskit/textfield@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@atlaskit/textfield/-/textfield-4.0.0.tgz#22b4cfab764e06bbcf253616b571d00b30885fc2"
+  integrity sha512-QCPH6zP08i7YRvzjAeokI/EA1X/stx6T2RVhXi9YbPTJA29C12eBolqXc9jwHVytArtqpRUUG7jpfv32scMYbQ==
+  dependencies:
+    "@atlaskit/analytics-next" "^7.0.0"
+    "@atlaskit/theme" "^10.0.0"
+    "@emotion/core" "^10.0.9"
+    tslib "^1.9.3"
+
 "@atlaskit/theme@^10.0.0":
   version "10.0.1"
   resolved "https://registry.yarnpkg.com/@atlaskit/theme/-/theme-10.0.1.tgz#91c6fed6e369f154b7af2d99fbed98d9cefef6e6"
