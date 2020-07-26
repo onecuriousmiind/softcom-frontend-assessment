@@ -46,6 +46,15 @@
     tslib "^1.9.3"
     uuid "^3.1.0"
 
+"@atlaskit/progress-indicator@^8.0.1":
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/@atlaskit/progress-indicator/-/progress-indicator-8.0.1.tgz#e947ef3414ac88e4432da649937a97f6a8df9ec7"
+  integrity sha512-K9QkkmM9Kap57mqrFoP+gtS1/qOWuQBsJiG1Q/mq61/KjMZgICmpGzs5OkirXcz2u6rQ7LOGu6vy4+/EBMHiKg==
+  dependencies:
+    "@atlaskit/analytics-next" "^7.0.0"
+    "@atlaskit/theme" "^10.0.0"
+    tslib "^1.9.3"
+
 "@atlaskit/spinner@^15.0.0":
   version "15.0.0"
   resolved "https://registry.yarnpkg.com/@atlaskit/spinner/-/spinner-15.0.0.tgz#bbf00803003ed4b674c27557d2b26198045ea5b0"
