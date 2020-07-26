@@ -10,4 +10,4 @@
  *
  */
 
-export { default, Field, FormSection, FormFooter } from '@atlaskit/form';
+export { default, ErrorMessage, Field, HelperMessage, FormSection, FormFooter } from '@atlaskit/form';
