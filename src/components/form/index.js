@@ -12,3 +12,6 @@
 
 export { default, FormHeader, FormSection, FormFooter } from '@atlaskit/form';
 export { default as FormField } from './FormField';
+export { default as EmailFormField } from './EmailFormField';
+export { default as FullNameFormField } from './FullNameFormField';
+export { default as PhoneNumberFormField } from './PhoneNumberFormField';
