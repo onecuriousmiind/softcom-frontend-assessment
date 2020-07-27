@@ -1,14 +1,9 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import React  from 'react';
 
-export default class GetStarted extends PureComponent {
-  static propTypes = {};
+import { GetStartedForm } from './components';
 
-  render() {
-    return (
-      <div>
-        Get started page works!
-      </div>
-    );
-  }
-}
+const GetStarted = () => (
+  <GetStartedForm />
+);
+
+export default GetStarted;
