@@ -20,6 +20,7 @@ const Footer = styled.div`
 export default class Stepper extends PureComponent {
   static propTypes = {
     progressAppearance: PropTypes.string,
+    progressSize: PropTypes.string,
     buttonsAppearance: PropTypes.string,
     defaultSelectedIndex: PropTypes.number,
     children: PropTypes.arrayOf(PropTypes.element).isRequired,
@@ -27,6 +28,7 @@ export default class Stepper extends PureComponent {
 
   static defaultProps = {
     progressAppearance: 'primary',
+    progressSize: 'small',
     defaultSelectedIndex: 0,
   };
 
@@ -113,7 +115,7 @@ export default class Stepper extends PureComponent {
   };
 
   render() {
-    const { buttonsAppearance, progressAppearance } = this.props;
+    const { buttonsAppearance, progressAppearance, progressSize } = this.props;
 
     return (
       <div>
@@ -132,6 +134,7 @@ export default class Stepper extends PureComponent {
             appearance={progressAppearance}
             selectedIndex={this.selectedIndex}
             values={this.progressPaginationValues}
+            size={progressSize}
           />
 
           <Button
