@@ -30,7 +30,7 @@ export default class GetStartedForm extends PureComponent {
     <form {...formProps}>
       <FormHeader title="Welcome! Let's get you set up."/>
 
-      <Stepper>
+      <Stepper destroyNonVisibleStep={false}>
         <Stepper.Step>
           <BasicInfoFormSection />
         </Stepper.Step>

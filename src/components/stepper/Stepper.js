@@ -19,6 +19,7 @@ const Footer = styled.div`
 
 export default class Stepper extends PureComponent {
   static propTypes = {
+    destroyNonVisibleStep: PropTypes.bool,
     progressAppearance: PropTypes.string,
     progressSize: PropTypes.string,
     buttonsAppearance: PropTypes.string,
@@ -27,13 +28,14 @@ export default class Stepper extends PureComponent {
   };
 
   static defaultProps = {
+    destroyNonVisibleStep: true,
     progressAppearance: 'primary',
     progressSize: 'small',
     defaultSelectedIndex: 0,
   };
 
-  static Step = ({ children, className }) => (
-    <div className={className}>{children}</div>
+  static Step = (props) => (
+    <div {...props} />
   );
 
   state = {
@@ -86,6 +88,26 @@ export default class Stepper extends PureComponent {
     return selectedIndex || defaultSelectedIndex;
   }
 
+  get content() {
+    const { destroyNonVisibleStep } = this.props;
+
+    if (!destroyNonVisibleStep) {
+      return React.Children.map(this.steps, (stepElement, stepElementIndex) => {
+        if (this.selectedIndex !== stepElementIndex) {
+          return React.cloneElement(stepElement, {
+            style: {
+              display: 'none',
+            }
+          });
+        }
+
+        return stepElement;
+      });
+    }
+
+    return this.steps[ this.selectedIndex ];
+  }
+
   static ensureChildIsAStep(child) {
     return child.type === Stepper.Step;
   }
@@ -119,7 +141,7 @@ export default class Stepper extends PureComponent {
 
     return (
       <div>
-        {this.steps[ this.selectedIndex ]}
+        {this.content}
 
         <Footer>
           <Button
