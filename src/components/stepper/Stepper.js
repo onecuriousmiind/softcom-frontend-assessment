@@ -17,7 +17,7 @@ const Footer = styled.div`
   margin-top: 2.5rem; // TODO: Make this controllable
 `;
 
-class Stepper extends PureComponent {
+export default class Stepper extends PureComponent {
   static propTypes = {
     progressAppearance: PropTypes.string,
     buttonsAppearance: PropTypes.string,
@@ -30,6 +30,10 @@ class Stepper extends PureComponent {
     buttonsAppearance: 'subtle',
     defaultSelectedIndex: 0,
   };
+
+  static Step = ({ children, className }) => (
+    <div className={className}>{children}</div>
+  );
 
   state = {
     selectedIndex: null,
@@ -82,7 +86,7 @@ class Stepper extends PureComponent {
   }
 
   static ensureChildIsAStep(child) {
-    return child.type === Step;
+    return child.type === Stepper.Step;
   }
 
   ensureChildrenAreActualSteps() {
@@ -143,15 +147,3 @@ class Stepper extends PureComponent {
     );
   }
 }
-
-// This uses regular JS function signature to enable it's hoisting.
-function Step({ children, className }) {
-  return (
-    <div className={className}>{children}</div>
-  );
-}
-
-// Attach Step to Stepper for better accessibility
-Stepper.Step = Step;
-
-export default Stepper;
