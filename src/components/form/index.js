@@ -10,5 +10,5 @@
  *
  */
 
-export { default, FormSection, FormFooter } from '@atlaskit/form';
+export { default, FormHeader, FormSection, FormFooter } from '@atlaskit/form';
 export { default as FormField } from './FormField';
