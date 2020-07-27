@@ -27,7 +27,6 @@ export default class Stepper extends PureComponent {
 
   static defaultProps = {
     progressAppearance: 'primary',
-    buttonsAppearance: 'subtle',
     defaultSelectedIndex: 0,
   };
 
