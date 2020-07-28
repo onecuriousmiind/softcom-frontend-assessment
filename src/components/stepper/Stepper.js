@@ -14,21 +14,29 @@ const Footer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 2.5rem; // TODO: Make this controllable
 `;
 
-class Stepper extends PureComponent {
+export default class Stepper extends PureComponent {
   static propTypes = {
+    destroyNonVisibleStep: PropTypes.bool,
     progressAppearance: PropTypes.string,
+    progressSize: PropTypes.string,
     buttonsAppearance: PropTypes.string,
     defaultSelectedIndex: PropTypes.number,
     children: PropTypes.arrayOf(PropTypes.element).isRequired,
   };
 
   static defaultProps = {
+    destroyNonVisibleStep: true,
     progressAppearance: 'primary',
-    buttonsAppearance: 'subtle',
+    progressSize: 'small',
     defaultSelectedIndex: 0,
   };
+
+  static Step = (props) => (
+    <div {...props} />
+  );
 
   state = {
     selectedIndex: null,
@@ -80,8 +88,28 @@ class Stepper extends PureComponent {
     return selectedIndex || defaultSelectedIndex;
   }
 
+  get content() {
+    const { destroyNonVisibleStep } = this.props;
+
+    if (!destroyNonVisibleStep) {
+      return React.Children.map(this.steps, (stepElement, stepElementIndex) => {
+        if (this.selectedIndex !== stepElementIndex) {
+          return React.cloneElement(stepElement, {
+            style: {
+              display: 'none',
+            }
+          });
+        }
+
+        return stepElement;
+      });
+    }
+
+    return this.steps[ this.selectedIndex ];
+  }
+
   static ensureChildIsAStep(child) {
-    return child.type === Step;
+    return child.type === Stepper.Step;
   }
 
   ensureChildrenAreActualSteps() {
@@ -109,11 +137,11 @@ class Stepper extends PureComponent {
   };
 
   render() {
-    const { buttonsAppearance, progressAppearance } = this.props;
+    const { buttonsAppearance, progressAppearance, progressSize } = this.props;
 
     return (
       <div>
-        {this.steps[ this.selectedIndex ]}
+        {this.content}
 
         <Footer>
           <Button
@@ -128,6 +156,7 @@ class Stepper extends PureComponent {
             appearance={progressAppearance}
             selectedIndex={this.selectedIndex}
             values={this.progressPaginationValues}
+            size={progressSize}
           />
 
           <Button
@@ -142,15 +171,3 @@ class Stepper extends PureComponent {
     );
   }
 }
-
-// This uses regular JS function signature to enable it's hoisting.
-function Step({ children, className }) {
-  return (
-    <div className={className}>{children}</div>
-  );
-}
-
-// Attach Step to Stepper for better accessibility
-Stepper.Step = Step;
-
-export default Stepper;
