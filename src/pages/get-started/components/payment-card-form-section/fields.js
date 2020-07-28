@@ -34,6 +34,19 @@ export default [
     name: 'pin',
     label: 'PIN',
     isRequired: true,
+    accept: /\d+/g,
+    defaultValue: '',
+    helpMessage: 'Fill in a 4-digit PIN.',
+    validMessage: 'Perfect!',
+    validate(value) {
+      const shouldBe4CharsLongRE = /.{4,}/;
+
+      if (!shouldBe4CharsLongRE.test(value)) {
+        return 'Should be 4 character long.';
+      }
+
+      return null;
+    },
     renderField: (fieldProps) => (
       <TextField
         type="password"

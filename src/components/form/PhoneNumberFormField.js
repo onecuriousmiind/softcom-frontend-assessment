@@ -6,7 +6,12 @@ import TextField from '../textfield';
 import FormField from './FormField';
 
 const PhoneNumberFormField = ({ textFieldProps, ...props }) => (
-  <FormField defaultValue="" transform={transformer} validate={validatePhoneNumber} {...props}>
+  <FormField
+    accept={/\d+/g}
+    defaultValue=""
+    validate={validatePhoneNumber}
+    {...props}
+  >
     {(fieldProps) => (
       <TextField
         type="tel"
@@ -40,12 +45,6 @@ const validatePhoneNumber = (value) => {
   }
 
   return null;
-};
-
-const transformer = ({ target: { value: newValue } }) => {
-  const digitsOnlyRE = /\d+/g;
-
-  return (newValue.match(digitsOnlyRE) || []).join('');
 };
 
 export default PhoneNumberFormField;

@@ -8,27 +8,31 @@ const FormField = ({ children: renderChildren, helpMessage, validMessage, valida
   const formProps = React.useContext(FormContext);
 
   return (
-    <Field validate={createValidator({ ...props, validate }, formProps)} {...props}>
-      {({ fieldProps, error, valid }) => (
+    <Field
+      transform={createTransformer(props)}
+      validate={createValidator({ ...props, validate }, formProps)}
+      {...props}
+    >
+      {({ fieldProps, error, valid, meta: { dirty } }) => (
         <>
           {renderChildren(fieldProps)}
 
-          {helpMessage && !error && (
+          {helpMessage && !error && !dirty && (
             <HelperMessage>
               {helpMessage}
             </HelperMessage>
-          )}
-
-          {error && (
-            <ErrorMessage>
-              {error}
-            </ErrorMessage>
           )}
 
           {validMessage && !error && valid && (
             <ValidMessage>
               {validMessage}
             </ValidMessage>
+          )}
+
+          {error && (
+            <ErrorMessage>
+              {error}
+            </ErrorMessage>
           )}
         </>
       )}
@@ -37,6 +41,7 @@ const FormField = ({ children: renderChildren, helpMessage, validMessage, valida
 };
 
 FormField.propTypes = {
+  accept: PropTypes.instanceOf(RegExp),
   children: PropTypes.func,
   helpMessage: PropTypes.string,
   validate: PropTypes.func,
@@ -55,6 +60,18 @@ const createValidator = (formFieldProps, formProps) => (value) => {
     default:
       return typeof validate === 'function' ? validate(value, formFieldProps, formValues) : null;
   }
+};
+
+const createTransformer = (formFieldProps) => (event) => {
+  const { accept } = formFieldProps;
+  const { target: { value: newValue } } = event;
+
+  if (accept) {
+
+    return (newValue.match(accept) || []).join('');
+  }
+
+  return newValue;
 };
 
 export default FormField;
