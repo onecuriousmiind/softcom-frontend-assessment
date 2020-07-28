@@ -1,13 +1,16 @@
 import PropTypes from "prop-types";
-import React, { Fragment } from 'react';
+import React from 'react';
+import { Field, HelperMessage, ErrorMessage, ValidMessage } from '@atlaskit/form';
 
-import { Field, HelperMessage, ErrorMessage } from '@atlaskit/form'
+import FormContext from './FormContext';
 
-const FormField = ({ children: renderChildren, helpMessage, validate, ...props }) => {
+const FormField = ({ children: renderChildren, helpMessage, validMessage, validate, ...props }) => {
+  const formProps = React.useContext(FormContext);
+
   return (
-    <Field validate={createValidator({ ...props, validate })} {...props}>
-      {({ fieldProps, error }) => (
-        <Fragment>
+    <Field validate={createValidator({ ...props, validate }, formProps)} {...props}>
+      {({ fieldProps, error, valid }) => (
+        <>
           {renderChildren(fieldProps)}
 
           {helpMessage && !error && (
@@ -21,7 +24,13 @@ const FormField = ({ children: renderChildren, helpMessage, validate, ...props }
               {error}
             </ErrorMessage>
           )}
-        </Fragment>
+
+          {validMessage && !error && valid && (
+            <ValidMessage>
+              {validMessage}
+            </ValidMessage>
+          )}
+        </>
       )}
     </Field>
   );
@@ -34,15 +43,17 @@ FormField.propTypes = {
   requiredMessage: PropTypes.string,
 };
 
-const createValidator = (formFieldProps) => (value) => {
+const createValidator = (formFieldProps, formProps) => (value) => {
+  const { getValues: getFormValues } = formProps;
   const { isRequired, requiredMessage, label, validate } = formFieldProps;
+  const formValues = getFormValues();
 
   switch (true) {
     case isRequired && !value:
       return `${label} is required` || requiredMessage;
 
     default:
-      return typeof validate === 'function' ? validate(value, formFieldProps) : null;
+      return typeof validate === 'function' ? validate(value, formFieldProps, formValues) : null;
   }
 };
 
