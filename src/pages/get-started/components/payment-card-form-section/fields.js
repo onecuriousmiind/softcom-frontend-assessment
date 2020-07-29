@@ -24,7 +24,6 @@ export default [
       <TextField
         maxLength={5}
         autoComplete="off"
-        width="xsmall"
         {...fieldProps}
         isMonospaced
       />
@@ -52,7 +51,6 @@ export default [
         type="password"
         autoComplete="off"
         maxLength={4}
-        width="small"
         {...fieldProps}
         isMonospaced
       />
