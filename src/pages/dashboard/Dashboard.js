@@ -1,14 +1,17 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
+import styled from 'styled-components';
 
-export default class Dashboard extends PureComponent {
-  static propTypes = {};
+const Dashboard = () => (
+  <Container>
+    <h2>Welcome to Softcom!</h2>
+  </Container>
+);
 
-  render() {
-    return (
-      <div>
-        Dashboard page works!
-      </div>
-    );
-  }
-}
+const Container = styled.div`
+  display: grid;
+  height: 100%;
+  align-items: center;
+  justify-items: center;
+`;
+
+export default Dashboard;

@@ -1,5 +1,6 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 
 import { Button, Form, FormHeader, Stepper } from '../../../../components';
 
@@ -20,12 +21,14 @@ const SubmitButton = styled(Button)`
   }
 `;
 
-export default class GetStartedForm extends PureComponent {
-  handleSubmit = (formValues) => {
-    console.log('submitted', formValues);
+const GetStartedForm = () => {
+  const history = useHistory();
+
+  const handleSubmit = () => {
+    history.push('/dashboard');
   };
 
-  createCanStepDeterminer = ({ ref: formRef, onSubmit }) => async () => {
+  const createCanStepDeterminer = ({ ref: formRef, onSubmit }) => async () => {
     // Call onSubmit to mark invalid fields.
     await onSubmit();
 
@@ -40,13 +43,13 @@ export default class GetStartedForm extends PureComponent {
       }).length);
   };
 
-  renderForm = ({ formProps, dirty, submitting }) => (
+  const renderForm = ({ formProps, dirty, submitting }) => (
     <form {...formProps}>
       <FormHeader title="Welcome! Let's get you set up." />
 
       <Stepper
         destroyNonVisibleStep={false}
-        canStep={this.createCanStepDeterminer(formProps)}
+        canStep={createCanStepDeterminer(formProps)}
       >
         <Stepper.Step>
           <BasicInfoFormSection />
@@ -73,13 +76,13 @@ export default class GetStartedForm extends PureComponent {
     </form>
   );
 
-  render() {
-    return (
-      <Container>
-        <Form onSubmit={this.handleSubmit}>
-          {this.renderForm}
-        </Form>
-      </Container>
-    );
-  }
-}
+  return (
+    <Container>
+      <Form onSubmit={handleSubmit}>
+        {renderForm}
+      </Form>
+    </Container>
+  );
+};
+
+export default GetStartedForm;
