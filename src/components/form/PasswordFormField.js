@@ -10,6 +10,7 @@ const PasswordFormField = ({ name, label, textFieldProps, shouldHaveConfirmation
       <FormField
         name={name}
         label={label}
+        defaultValue=""
         validate={validatePasswordField}
         validMessage="Now, that's one hell of a password! 😎"
         {...props}
@@ -24,9 +25,10 @@ const PasswordFormField = ({ name, label, textFieldProps, shouldHaveConfirmation
       </FormField>
 
       {shouldHaveConfirmationField && <FormField
-        passwordFeildName={name}
+        passwordFieldName={name}
         name={`${name}Confirmation`}
         label={`${label} Confirmation`}
+        defaultValue=""
         validate={validatePasswordConfirmationField}
         {...props}
       >
@@ -87,7 +89,8 @@ const validatePasswordField = (value) => {
   }
 };
 
-const validatePasswordConfirmationField = (value, { passwordFieldName }, formValues) => {
+const validatePasswordConfirmationField = (value, formFieldProps, formValues) => {
+  const { passwordFieldName } = formFieldProps;
   const passwordFieldValue = formValues[passwordFieldName];
 
   if (value !== passwordFieldValue) {

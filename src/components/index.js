@@ -8,7 +8,6 @@ export {
   FormHeader,
   FormField,
   FormSection,
-  FormFooter,
   PhoneNumberFormField,
   PasswordFormField,
 }from './form';

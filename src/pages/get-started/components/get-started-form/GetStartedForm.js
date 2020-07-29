@@ -10,27 +10,44 @@ import PaymentCardFormSection from '../payment-card-form-section';
 const Container = styled.div`
   max-width: 18rem;
   width: 100%;
-  margin: 0 auto;
 `;
 
 const SubmitButton = styled(Button)`
   &[type="submit"] {
     height: 3rem;
     margin-top: 1rem;
+    font-weight: bold;
   }
 `;
 
 export default class GetStartedForm extends PureComponent {
-
   handleSubmit = (formValues) => {
     console.log('submitted', formValues);
   };
 
+  createCanStepDeterminer = ({ ref: formRef, onSubmit }) => async () => {
+    // Call onSubmit to mark invalid fields.
+    await onSubmit();
+
+    // Proceed if there are no more invalid
+    // fields on current step else stay put.
+    return !(Array
+      .from(formRef.current.querySelectorAll("input[aria-invalid='true']"))
+      .filter((element) => {
+        element.focus();
+
+        return element === document.activeElement;
+      }).length);
+  };
+
   renderForm = ({ formProps, dirty, submitting }) => (
     <form {...formProps}>
-      <FormHeader title="Welcome! Let's get you set up."/>
+      <FormHeader title="Welcome! Let's get you set up." />
 
-      <Stepper destroyNonVisibleStep={false}>
+      <Stepper
+        destroyNonVisibleStep={false}
+        canStep={this.createCanStepDeterminer(formProps)}
+      >
         <Stepper.Step>
           <BasicInfoFormSection />
         </Stepper.Step>

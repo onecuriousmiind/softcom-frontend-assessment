@@ -8,6 +8,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { ProgressDots } from '@atlaskit/progress-indicator';
 
+import { isFunction } from '../../util';
+
 import Button from '../button';
 
 const Footer = styled.div`
@@ -24,6 +26,8 @@ export default class Stepper extends PureComponent {
     progressSize: PropTypes.string,
     buttonsAppearance: PropTypes.string,
     defaultSelectedIndex: PropTypes.number,
+    onNext: PropTypes.func,
+    canStep: PropTypes.func,
     children: PropTypes.arrayOf(PropTypes.element).isRequired,
   };
 
@@ -130,7 +134,17 @@ export default class Stepper extends PureComponent {
     }));
   };
 
-  handleNext = () => {
+  handleNext = async (e) => {
+    const { canStep, onNext } = this.props;
+
+    if (isFunction(canStep) && !await canStep(e)) {
+      return;
+    }
+
+    if (isFunction(onNext)) {
+      onNext(e);
+    }
+
     this.setState(prevState => ({
       selectedIndex: prevState.selectedIndex + 1,
     }));
