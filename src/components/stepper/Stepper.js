@@ -65,15 +65,11 @@ export default class Stepper extends PureComponent {
   }
 
   get isLastStep() {
-    const { selectedIndex } = this.state;
-
-    return selectedIndex === this.noOfSteps - 1;
+    return this.selectedIndex === this.noOfSteps - 1;
   }
 
   get isFirstStep() {
-    const { selectedIndex } = this.state;
-
-    return selectedIndex === 0;
+    return this.selectedIndex === 0;
   }
 
   get progressPaginationValues() {
