@@ -32,6 +32,8 @@ const GetStartedForm = () => {
     // Call onSubmit to mark invalid fields.
     await onSubmit();
 
+    if (!formRef.current) return;
+
     // Proceed if there are no more invalid
     // fields on current step else stay put.
     return !(Array
