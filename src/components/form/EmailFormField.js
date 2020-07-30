@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { VALID_EMAIL_REGEX } from '../../util';
+
 import TextField from '../textfield';
 
 import FormField from './FormField';
@@ -31,11 +33,7 @@ EmailFormField.propTypes = {
 };
 
 const validateEmail = (value) => {
-  // Thanks to https://emailregex.com/ for providing this email address regular expression :)
-  const validEmailRegExpPattern =
-    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-  if (!validEmailRegExpPattern.test(value)) {
+  if (!VALID_EMAIL_REGEX.test(value)) {
     return 'That email does not look good.'
   }
 
