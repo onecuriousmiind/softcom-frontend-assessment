@@ -8,7 +8,6 @@ import FormField from './FormField';
 const PhoneNumberFormField = ({ textFieldProps, ...props }) => (
   <FormField
     accept={/\d+/g}
-    defaultValue=""
     validate={validatePhoneNumber}
     {...props}
   >
@@ -29,11 +28,13 @@ const PhoneNumberFormField = ({ textFieldProps, ...props }) => (
 PhoneNumberFormField.defaultProps = {
   name: 'phoneNumber',
   label: 'Phone Number',
-  helpMessage: 'Accepts only Nigerian phone numbers. Country code is not required.'
+  helpMessage: 'Accepts only Nigerian phone numbers. Country code is not required.',
+  defaultValue: '',
 };
 
 PhoneNumberFormField.propTypes = {
   textFieldProps: PropTypes.object,
+  defaultValue: PropTypes.string,
 };
 
 const validatePhoneNumber = (value) => {

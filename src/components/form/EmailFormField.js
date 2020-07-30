@@ -22,10 +22,12 @@ const EmailFormField = ({ textFieldProps, ...props }) => (
 EmailFormField.defaultProps = {
   name: 'email',
   label: 'Email',
+  defaultValue: '',
 };
 
 EmailFormField.propTypes = {
   textFieldProps: PropTypes.object,
+  defaultValue: PropTypes.string,
 };
 
 const validateEmail = (value) => {
