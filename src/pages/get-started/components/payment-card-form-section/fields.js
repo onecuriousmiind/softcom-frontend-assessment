@@ -7,12 +7,38 @@ export default [
     name: 'cardNumber',
     label: 'Debit / Credit Card Number',
     isRequired: true,
+    accept: /\d+/g,
+    defaultValue: '',
+    format(value) {
+      const chars = value.split('');
+      const positionsToIncludeSpace = [ 4, 8, 12 ];
+
+      return chars
+        .reduce(
+          (accumulatedChars, currentChar, index) => (
+            positionsToIncludeSpace.includes(index) ?
+              `${accumulatedChars} ${currentChar}` :
+              `${accumulatedChars}${currentChar}`
+          ),
+          ''
+        );
+    },
+    validate(value) {
+      const validCardNumberRE = /(\d{4}\s?){4}/;
+
+      if (!validCardNumberRE.test(value)) {
+        return 'Please fill in a valid credit/debit card number.';
+      }
+
+      return null;
+    },
     renderField: (fieldProps) => (
       <TextField
         maxLength={19}
         autoComplete="off"
-        {...fieldProps}
+        placeholder="0000 0000 0000 0000"
         isMonospaced
+        {...fieldProps}
       />
     ),
   },
@@ -20,12 +46,37 @@ export default [
     name: 'expirationDate',
     label: 'Expiration Date',
     isRequired: true,
+    accept: /\d+/g,
+    defaultValue: '',
+    format(value) {
+      const chars = value.split('');
+
+      return chars
+        .reduce(
+          (accumulatedChars, currentChar, index) => (
+            index === 2 ?
+              `${accumulatedChars}/${currentChar}` :
+              `${accumulatedChars}${currentChar}`
+          ),
+          ''
+        );
+    },
+    validate(value) {
+      const validDateRE = /\d{2}\/\d{2}/;
+
+      if (!validDateRE.test(value)) {
+        return 'Please fill in a valid date';
+      }
+
+      return null;
+    },
     renderField: (fieldProps) => (
       <TextField
         maxLength={5}
         autoComplete="off"
-        {...fieldProps}
+        placeholder="MM/YY"
         isMonospaced
+        {...fieldProps}
       />
     ),
   },
@@ -51,8 +102,8 @@ export default [
         type="password"
         autoComplete="off"
         maxLength={4}
-        {...fieldProps}
         isMonospaced
+        {...fieldProps}
       />
     ),
   },

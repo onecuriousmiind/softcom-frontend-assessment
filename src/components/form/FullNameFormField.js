@@ -22,10 +22,12 @@ const FullNameFormField = ({ textFieldProps, ...props }) => (
 FullNameFormField.defaultProps = {
   name: 'fullName',
   label: 'Full Name',
+  defaultValue: '',
 };
 
 FullNameFormField.propTypes = {
   textFieldProps: PropTypes.object,
+  defaultValue: PropTypes.string,
 };
 
 const validateFullName = (value) => {
