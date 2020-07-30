@@ -34,15 +34,21 @@ const GetStartedForm = () => {
 
     if (!formRef.current) return;
 
-    // Proceed if there are no more invalid
-    // fields on current step else stay put.
-    return !(Array
-      .from(formRef.current.querySelectorAll("input[aria-invalid='true']"))
-      .filter((element) => {
-        element.focus();
+    const elementCanReceiveFocus = (element) => {
+      element.focus();
 
-        return element === document.activeElement;
-      }).length);
+      return element === document.activeElement;
+    };
+
+    // Fish out all invalid fields in the current step
+    const stepInvalidFields = Array
+      .from(formRef.current.querySelectorAll("input[aria-invalid='true']"))
+      .filter(elementCanReceiveFocus);
+
+    // If this evaluates to true, the user can move on.
+    // Else they stay put until all validation rules
+    // are satisfied.
+    return stepInvalidFields.length === 0;
   };
 
   const renderForm = ({ formProps, dirty, submitting }) => (
